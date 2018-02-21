@@ -16,7 +16,7 @@ var blogSchema= new mongoose.Schema({
 
 var Blog= mongoose.model("Blog", blogSchema);
 
-
+//INDEX ROUTE
 app.get("/blogs", function(req, res){
 	Blog.find({}, function(err, blogs){
 		if(err){
@@ -28,9 +28,37 @@ app.get("/blogs", function(req, res){
 	
 });
 
+app.post("/blogs" ,function(req, res){
+	
+	Blog.create(req.body.blog, function(err, blogs){
+		if(err){
+			res.render("new");
+		}else{
+			res.redirect("/blogs");
+		}
+	});
+});
+
 app.get("/", function(req, res){
 	res.redirect("/blogs");
 });
+app.get("/blogs/new", function(req,res){
+	res.render("new");
+});
+app.get("/blogs/:id", function(req, res){
+	Blog.findById(req.params.id, function(err, foundBlog){
+		if(err){
+			res.redirect("/blogs");
+		}else{
+			res.render("show", {blog: foundBlog});
+		}
+	});
+
+});
+//NEW ROUTE
+
+
+//CREATE ROUTE
 app.listen(3000, function(){
    console.log("The YelpCamp Server Has Started!");
 });

@@ -8,11 +8,19 @@
 			<div class="content">
 				<span><%= blog.created.toDateString() %></span>
 			</div>
+			<div class="description">
+				<p><%= blog.body %></p>
+			</div>
+
+			<form action="/blogs/<%= blog._id%>?_method=DELETE" method="POST">
+				<button class="ui red basic button">Delete</button>
+			</form>
 		</div>
 	</div>
 	
 	
-	<p><%= blog.body %></p>
+	
 	
 </div>
+
 <% include ./partials/footer %>
